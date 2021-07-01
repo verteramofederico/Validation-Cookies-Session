@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color:<%=(user&&user.color)?user.color:(color)?color:"snow"%> ;" >
+    <h1>Cookies y validaciones</h1>
+
+    
+    <% if (user) { %>
+        <p>Hola <%= user.name %>  <br> elegiste el color: <%= user.color %> , <br> tu email es:
+            <%= user.email %>  <br> tu edad es: <%= user.age %> </p>
+            <form method="POST" action="/">
+                <label for="olvidar">Olvidar color</label>
+                <input type="checkbox" name="olvidar">
+            <br>
+            <button type="submit">Enviar</button>
+        </form>
+            
+    <% } else { %> <form method="POST" action="/">
+        <label for="name">Ingrese su nombre</label>
+        <input type="text" name="name" value="<%= locals.oldData ? oldData.name : null %>">
+        <% if (locals.errors && errors.name) { %>
+            <%= errors.name.msg %>
+    <% } %>
+        <br>
+
+        <label for="email">Ingrese su email</label>
+        <input type="text" name="email" value="<%= locals.oldData ? oldData.email : null %>">
+        <% if (locals.errors && errors.email) { %>
+                <%= errors.email.msg %>
+        <% } %>
+        <br>
+
+        <label for="age">Ingrese su edad</label>
+        <input type="text" name="age" value=<%= locals.oldData ? oldData.age : null %> >
+        <% if (locals.errors && errors.age) { %>
+            <%= errors.age.msg %>
+    <% } %>
+        <br>
+
+        <label for="color">Elija color</label>
+        <select name="color">
+            <option value=""></option>
+            <%  
+            let colores = [{name:'red', value: "#ff0000"}, {name:'blue', value: "#0000ff"}, {name:'green', value: "#00ff00"}];
+        %>
+        <% for (const unColor of colores) { %>
+            <option 
+                value="<%= unColor.value %>"> <%= unColor.name %> </option>
+        <% } %>                
+        </select>
+        <% if (locals.errors && errors.color) { %>
+            <%= errors.color.msg %>
+    <% } %>
+        <br>
+        <label for="recordar">Recordar color</label>
+            <input type="checkbox" name="recordar">
+        <br>
+        <button type="submit">Enviar</button>
+    </form> <% } %>       
+
+    
+</body>
+</html>
